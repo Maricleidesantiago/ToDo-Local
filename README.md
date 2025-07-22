@@ -7,3 +7,5 @@ Objetivo principal desse projetoé praticar conceitos de javascript, como manipu
   Uso de Arrow functions para manipular o form
   Armazenar as tarefas no localStorage
   Exibir todas as tarefas salvas no localStorage ao carregar a página
+  implementação do botão de excluir da lista e do localStorage
+  css

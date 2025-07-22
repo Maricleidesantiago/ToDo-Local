@@ -16,23 +16,69 @@ function carregarTarefas(){
     if (tarefas) {
         const tarefasArray = JSON.parse(tarefas);//transforma a string JSON em um array
         tarefasArray.forEach((tarefa) => {
-            const li = document.createElement("li");
+            /*const li = document.createElement("li");
             li.textContent = tarefa;
-            lista.appendChild(li);
+            lista.appendChild(li);*/
+            //Atualização para o EXERCÍCIO 3
+            adicionarTarefa(tarefa);
         });
     }
 }
+
+//EXERCICIO 3: Função que adiciona uma nova tarefa na tela com botão de excluir
+function adicionarTarefa(tarefa) {
+    const li = document.createElement("li");
+    li.textContent = tarefa;
+
+    const btnExcluir = document.createElement("button");//criar um botão
+    btnExcluir.textContent = "Excluir";     //adicionar o texto ao botão
+
+    //Ao clicar no botão de excluir, ele remove a tarefa da lista e do local storage
+    btnExcluir.addEventListener("click", () => {
+        removerTarefa(tarefa);          //remove a tarefa do local storage
+        li.remove();                    //remove o item da lista
+    });
+
+
+    li.appendChild(btnExcluir);         //adiciona o botão ao item da lista
+    lista.appendChild(li);              //adiciona o item completo na lista
+}
+
+//EXERCICIO 3: Função que remove uma tarefa da lista e do local storage
+function removerTarefa(tarefaRemover) {
+    const tarefas = localStorage.getItem("tarefas");
+    if (tarefas) {
+        const tarefasArray = JSON.parse(tarefas);
+
+        // Filtra o array para remover a tarefa clicada
+        const novasTarefas = tarefasArray.filter(t => t !== tarefaRemover);
+
+        //salva o novo array atualizado no local storage
+        localStorage.setItem("tarefas", JSON.stringify(novasTarefas));
+    }
+}
+
 //EXERCICIO 1: Usar arrow function para manipular o clique(envio do formulario)
 form.addEventListener("submit", (event) => {
-    event.preventDefault();//evitar o comportamento padrão do formulário
-    const novaTarefa = input.value.trim();//trim para remover os espaços em branco
+     //evitar o comportamento padrão do formulário
+    event.preventDefault();                
 
-    if (novaTarefa !== "") {//verificar se a tarefa não está vazia
-        const li = document.createElement("li");//criar um item da lista
-        li.textContent = novaTarefa;//adicionar o conteúdo do campo de digitação
-        lista.appendChild(li);//adicionar a tarefa na lista
-        input.value = "";//limpar o campo de digitação
-        salvarTarefas();//salvar as tarefas no local storage
+    //trim para remover os espaços em branco
+    const novaTarefa = input.value.trim();
+    //verificação para ver se a tarefa não está vazia
+    if (novaTarefa !== "") {   
+        //adicionar a tarefa na lista         
+        adicionarTarefa(novaTarefa);  
+        //limpar o campo de entrada  
+        input.value = "";               
+        
+        //Atualiza o localStorage com a nova lista
+        const tarefas =  document.querySelectorAll("#lista-tarefas li");
+
+        //cria um array de texto com o conteudo das tarefas, para salvar no local storage
+        const tarefasArray = Array.from(tarefas).map((tarefa) => tarefa.textContent);
+        localStorage.setItem("tarefas", JSON.stringify(tarefasArray));
+        
     }
 });
 
