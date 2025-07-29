@@ -1,4 +1,4 @@
-
+/* Reset básico e fonte padrão */
 * {
   margin: 0;
   padding: 0;
@@ -6,6 +6,7 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* Corpo da página */
 body {
   background: #f5f7fa;
   color: #333;
@@ -16,7 +17,14 @@ body {
   padding: 40px 20px;
 }
 
-/* Container principal */
+/* Título principal */
+h1 {
+  color: #e54661;
+  text-align: center;
+  padding: 30px;
+}
+
+/* Container da To-Do List */
 .todo-container {
   background: #fff;
   border-radius: 16px;
@@ -27,12 +35,11 @@ body {
   transition: 0.3s;
 }
 
-/* Título */
 .todo-container h1 {
   text-align: center;
   margin-bottom: 20px;
   font-size: 2rem;
-  color: #444;
+  color: #0f0a0a;
 }
 
 /* Formulário */
@@ -53,12 +60,12 @@ form input[type="text"] {
 
 form input[type="text"]:focus {
   outline: none;
-  border-color: #4f46e5;
+  border-color: #e54661;
   box-shadow: 0 0 0 2px #c7d2fe;
 }
 
 form button {
-  background-color: #4f46e5;
+  background-color: #e54696;
   color: white;
   padding: 12px 18px;
   border: none;
@@ -72,9 +79,10 @@ form button:hover {
   background-color: #4338ca;
 }
 
-/* Lista */
+/* Lista de tarefas */
 ul {
   list-style: none;
+  padding: 0;
 }
 
 ul li {
@@ -92,8 +100,9 @@ ul li span {
   flex: 1;
 }
 
-/* Botão de deletar */
-.delete-btn {
+/* Botão de excluir */
+.delete-btn,
+#lista-tarefas button {
   background: transparent;
   border: none;
   color: #ef4444;
@@ -102,11 +111,14 @@ ul li span {
   transition: 0.2s;
 }
 
-.delete-btn:hover {
-  transform: scale(1.2);
+.delete-btn:hover,
+#lista-tarefas button:hover {
+  background-color: #ffb3b3;
+  color: #800000;
+  transform: scale(1.05);
 }
 
-/* Animação */
+/* Animação de entrada */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -115,5 +127,30 @@ ul li span {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+  form {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  form input[type="text"],
+  form button {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  ul li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #lista-tarefas button {
+    margin-left: 0;
+    margin-top: 8px;
+    align-self: flex-end;
   }
 }

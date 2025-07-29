@@ -2,12 +2,34 @@ const form = document.getElementById("form-tarefas");
 const input = document.getElementById("input-tarefa");
 const lista = document.getElementById("lista-tarefas");
 
+const campoBusca = document.getElementById("input-busca");//tarefa 4:implementar filtro de tarefa
+
+
 //EXERCICIO 2: Usar local storage para salvar as tarefas
 function salvarTarefas() {
     const tarefas = document.querySelectorAll("#lista-tarefas li");//pega todos os itens da lista
-    const tarefasArray = Array.from(tarefas).map((tarefa) => tarefa.textContent);//transforma os itens em um array
+    const tarefasArray = Array.from(tarefas).map((tarefa) =>
+        tarefa.querySelector("span").textContent);//pega o texto da tarefa
+
     localStorage.setItem("tarefas", JSON.stringify(tarefasArray));//salva o array no local storage como string JSON
 }
+
+//EXERCICIO 4: Implementar filtro de tarefa
+campoBusca.addEventListener("input", () => {
+    const termoBusca = campoBusca.value.toLowerCase();//pega o que foi digitado no campo de busca em minusculo
+    const tarefas = document.querySelectorAll("#lista-tarefas li");//pega todos os itens da lista
+
+    //usando o forEach
+    tarefas.forEach((tarefa) => {
+        const texto = tarefa.textContent.toLowerCase();//conteúdo da tarefa
+        if (texto.includes(termoBusca)) {
+            tarefa.style.display = "list-item"; //mostra se bate com o filtro
+        } else {
+            tarefa.style.display = "none"; //esconde se não bate com o filtro 
+        }
+    });
+});
+
 
 //Exercicio 2: Pegando os dados do local storage com Json.parse para renderizar as tarefas 
 //novamente na lista ao recarregar a página
@@ -28,20 +50,21 @@ function carregarTarefas(){
 //EXERCICIO 3: Função que adiciona uma nova tarefa na tela com botão de excluir
 function adicionarTarefa(tarefa) {
     const li = document.createElement("li");
-    li.textContent = tarefa;
 
-    const btnExcluir = document.createElement("button");//criar um botão
-    btnExcluir.textContent = "Excluir";     //adicionar o texto ao botão
+    const span = document.createElement("span"); // cria o span
+    span.textContent = tarefa; // adiciona o texto da tarefa
+    li.appendChild(span); // adiciona o span ao li
 
-    //Ao clicar no botão de excluir, ele remove a tarefa da lista e do local storage
-    btnExcluir.addEventListener("click", () => {
-        removerTarefa(tarefa);          //remove a tarefa do local storage
-        li.remove();                    //remove o item da lista
+    const btnExcluir = document.createElement("button");
+    btnExcluir.textContent = "Excluir";
+
+    btnExcluir.addEventListener("click", function () {
+        li.remove();
+        salvarTarefas(); // salva novamente após excluir
     });
 
-
-    li.appendChild(btnExcluir);         //adiciona o botão ao item da lista
-    lista.appendChild(li);              //adiciona o item completo na lista
+    li.appendChild(btnExcluir); // adiciona o botão ao li
+    document.getElementById("lista-tarefas").appendChild(li);
 }
 
 //EXERCICIO 3: Função que remove uma tarefa da lista e do local storage
@@ -72,10 +95,10 @@ form.addEventListener("submit", (event) => {
         //limpar o campo de entrada  
         input.value = "";               
         
-        //Atualiza o localStorage com a nova lista
+        //Atualizar o localStorage com a nova lista
         const tarefas =  document.querySelectorAll("#lista-tarefas li");
 
-        //cria um array de texto com o conteudo das tarefas, para salvar no local storage
+        //criar um array de texto com o conteudo das tarefas, para salvar no local storage
         const tarefasArray = Array.from(tarefas).map((tarefa) => tarefa.textContent);
         localStorage.setItem("tarefas", JSON.stringify(tarefasArray));
         

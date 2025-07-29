@@ -9,3 +9,5 @@ Objetivo principal desse projetoé praticar conceitos de javascript, como manipu
   Exibir todas as tarefas salvas no localStorage ao carregar a página
   implementação do botão de excluir da lista e do localStorage
   css
+  Input para filtrar tarefas
+  
