@@ -51,19 +51,35 @@ function carregarTarefas(){
 function adicionarTarefa(tarefa) {
     const li = document.createElement("li");
 
+    //Implementação extra botão de checkbox para marcar a tarefa como concluida
+    const checkBox = document.createElement("input");
+    checkBox.type = "checkbox";
+    checkBox.addEventListener("change", function () {
+        if (checkBox.checked) {
+            span.classList.add("concluida"); // adiciona a classe "concluidaa" ao ser marcada
+        } else {
+            span.classList.remove("concluida"); // remove a classe "concluida" ao desmarcar
+        }
+            salvarTarefas();
+    });
+
     const span = document.createElement("span"); // cria o span
     span.textContent = tarefa; // adiciona o texto da tarefa
-    li.appendChild(span); // adiciona o span ao li
-
+    
     const btnExcluir = document.createElement("button");
-    btnExcluir.textContent = "Excluir";
+    btnExcluir.innerHTML = '<i class="bi bi-trash"></i>';
+    btnExcluir.classList.add("delete-btn");//adiciona a classe ao botão
 
     btnExcluir.addEventListener("click", function () {
         li.remove();
         salvarTarefas(); // salva novamente após excluir
     });
 
+    li.appendChild(checkBox);//adiciona o checkbox ao li
+    li.appendChild(span);//adiciona o span ao li
     li.appendChild(btnExcluir); // adiciona o botão ao li
+   
+
     document.getElementById("lista-tarefas").appendChild(li);
 }
 
@@ -99,7 +115,8 @@ form.addEventListener("submit", (event) => {
         const tarefas =  document.querySelectorAll("#lista-tarefas li");
 
         //criar um array de texto com o conteudo das tarefas, para salvar no local storage
-        const tarefasArray = Array.from(tarefas).map((tarefa) => tarefa.textContent);
+        const tarefasArray = Array.from(tarefas).map((tarefa) => 
+            tarefa.querySelector("span").textContent);
         localStorage.setItem("tarefas", JSON.stringify(tarefasArray));
         
     }

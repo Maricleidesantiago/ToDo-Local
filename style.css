@@ -105,16 +105,16 @@ ul li span {
 #lista-tarefas button {
   background: transparent;
   border: none;
-  color: #ef4444;
+  color: #e54661;
   font-size: 20px;
   cursor: pointer;
-  transition: 0.2s;
+  margin-left: 10px;
+  transition: color 0.3s ease;
 }
 
 .delete-btn:hover,
 #lista-tarefas button:hover {
-  background-color: #ffb3b3;
-  color: #800000;
+  color: #e54661;
   transform: scale(1.05);
 }
 
@@ -154,3 +154,47 @@ ul li span {
     align-self: flex-end;
   }
 }
+.concluida {
+    text-decoration: line-through;
+    color: gray;
+}
+/* Esconde o visual padrão do checkbox */
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: #fff;
+  border: 2px solid  #f5b6c4;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  margin-right: 8px;
+  transition: background 0.3s, border 0.3s;
+}
+
+/* Quando marcado, muda o fundo */
+input[type="checkbox"]:checked {
+  background-color:  #e54661;
+  border-color: #e54661;
+}
+
+/* Adiciona o "check" usando um pseudo-elemento */
+input[type="checkbox"]::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  width: 4px;
+  height: 9px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  opacity: 0;
+  transform: rotate(45deg);
+  transition: opacity 0.2s;
+}
+
+input[type="checkbox"]:checked::after {
+  opacity: 1;
+}
+
